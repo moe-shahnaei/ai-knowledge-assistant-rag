@@ -1,0 +1,5 @@
+The AI knowledge assistant should answer questions using retrieved document context. If the answer is not supported by the provided context, the assistant should say that the information is not available in the knowledge base.
+
+To reduce unsupported answers, the assistant should retrieve relevant chunks before generating a response. The response should be grounded in source documents and should not invent policies, procedures, or technical instructions.
+
+Support documentation should include setup steps, known limitations, troubleshooting notes, and examples of questions the assistant can answer.

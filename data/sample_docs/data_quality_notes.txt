@@ -1,0 +1,5 @@
+Data quality checks help confirm that business information is accurate, complete, consistent, and reliable. Common checks include missing values, duplicate records, invalid dates, incorrect statuses, inconsistent formatting, and outdated records.
+
+A data quality scorecard can summarize exception counts by category, such as missing client name, duplicate client ID, expired review date, missing documents, or invalid account status.
+
+Root-cause analysis helps identify why a data issue happened. Possible causes include manual entry errors, unclear process steps, system integration issues, missing validation rules, or outdated documentation.

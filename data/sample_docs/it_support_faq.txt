@@ -1,0 +1,5 @@
+If a user cannot access a system, first confirm the username, check whether the account is locked, verify network connectivity, and confirm the user has the correct permissions. If the issue continues, document the error message, time of issue, affected system, and troubleshooting steps taken.
+
+For printer issues, check power, network connection, print queue status, and driver settings. If the printer is shared across the office, confirm whether other users are affected.
+
+For website issues, confirm whether the problem is related to content updates, broken links, page loading, or user access. Document the issue and test the fix before closing the support request.
