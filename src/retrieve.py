@@ -51,7 +51,7 @@ def build_vector_database() -> None:
     print(f"Saved {len(chunks)} chunks into Chroma vector database.")
 
 
-def search_knowledge_base(query: str, top_k: int = 3) -> None:
+def search_knowledge_base(query: str, top_k: int = 3) -> list[dict]:
     client = chromadb.PersistentClient(path=str(CHROMA_DIR))
     collection = client.get_or_create_collection(name=COLLECTION_NAME)
 
@@ -63,18 +63,19 @@ def search_knowledge_base(query: str, top_k: int = 3) -> None:
         n_results=top_k
     )
 
-    print(f"\nQuestion: {query}\n")
-    print("Top retrieved chunks:")
+    retrieved_results = []
 
     for index, document in enumerate(results["documents"][0], start=1):
         metadata = results["metadatas"][0][index - 1]
 
-        print("=" * 80)
-        print(f"Result {index}")
-        print(f"Source: {metadata['source']} | Chunk: {metadata['chunk_id']}")
-        print("-" * 80)
-        print(document)
+        retrieved_results.append({
+            "rank": index,
+            "source": metadata["source"],
+            "chunk_id": metadata["chunk_id"],
+            "text": document
+        })
 
+    return retrieved_results
 
 def main() -> None:
     build_vector_database()
@@ -85,8 +86,17 @@ def main() -> None:
         if query.lower() == "exit":
             break
 
-        search_knowledge_base(query)
+        results = search_knowledge_base(query)
 
+        print(f"\nQuestion: {query}\n")
+        print("Top retrieved chunks:")
 
+        for result in results:
+            print("=" * 80)
+            print(f"Result {result['rank']}")
+            print(f"Source: {result['source']} | Chunk: {result['chunk_id']}")
+            print("-" * 80)
+            print(result["text"])
+    
 if __name__ == "__main__":
     main()

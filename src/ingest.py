@@ -22,18 +22,46 @@ def load_text_files(folder_path: Path) -> list[dict]:
     return documents
 
 
-def chunk_text(text: str, chunk_size: int = 500, overlap: int = 100) -> list[str]:
+def chunk_text(text: str, chunk_size: int = 500, overlap_sentences: int = 1) -> list[str]:
+    """
+    Split text into cleaner chunks using paragraphs and sentences.
+    This avoids cutting words in the middle like character-based chunking.
+    """
+
+    text = text.replace("\r\n", "\n").strip()
+
+    paragraphs = [paragraph.strip() for paragraph in text.split("\n\n") if paragraph.strip()]
+
+    sentences = []
+
+    for paragraph in paragraphs:
+        parts = paragraph.replace("? ", "?\n").replace("! ", "!\n").replace(". ", ".\n").split("\n")
+        for part in parts:
+            sentence = part.strip()
+            if sentence:
+                sentences.append(sentence)
+
     chunks = []
-    start = 0
+    current_chunk = []
 
-    while start < len(text):
-        end = start + chunk_size
-        chunk = text[start:end].strip()
+    for sentence in sentences:
+        current_text = " ".join(current_chunk)
 
-        if chunk:
-            chunks.append(chunk)
+        if len(current_text) + len(sentence) <= chunk_size:
+            current_chunk.append(sentence)
+        else:
+            if current_chunk:
+                chunks.append(" ".join(current_chunk))
 
-        start += chunk_size - overlap
+            if overlap_sentences > 0:
+                current_chunk = current_chunk[-overlap_sentences:]
+            else:
+                current_chunk = []
+
+            current_chunk.append(sentence)
+
+    if current_chunk:
+        chunks.append(" ".join(current_chunk))
 
     return chunks
 
