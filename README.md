@@ -1,34 +1,52 @@
 # AI Knowledge Assistant with RAG
 
 ## Project Overview
-This project is a simple AI-powered knowledge assistant that uses retrieval-augmented generation (RAG) to answer questions from uploaded or stored documents.
+This project is a simple Retrieval-Augmented Generation (RAG) knowledge assistant. It processes local text documents, splits them into cleaner chunks, creates embeddings, stores them in a Chroma vector database, retrieves relevant context based on a user question, and generates a grounded answer with source references.
 
-## Goal
-The goal is to build a grounded assistant that retrieves relevant document context before generating a response. This helps reduce unsupported answers and improves response relevance.
+## Why I Built This
+I built this project to strengthen my practical understanding of AI application support, semantic search, document retrieval, embeddings, vector databases, and grounded assistant responses. The project is especially relevant to AI support, junior AI engineering, application support, and data/knowledge management roles.
 
-## Features
-- Document ingestion
-- Text chunking
-- Embedding generation
-- Vector search
-- Retrieval-based question answering
-- Source/context display
-- Basic hallucination-control approach
-- Setup and support documentation
+## Current Features
+- Loads `.txt` documents from a local knowledge base
+- Splits documents into sentence-aware chunks
+- Saves processed chunks locally
+- Creates embeddings using `sentence-transformers`
+- Stores embeddings in a Chroma vector database
+- Retrieves semantically relevant chunks for a user question
+- Generates a basic grounded answer using retrieved context
+- Displays source files and chunk IDs for transparency
 
-## Tools
-Python, LangChain, FAISS or Chroma, Streamlit, pandas, Git, GitHub
+## RAG Pipeline
+Documents → Chunks → Embeddings → Vector Database → Semantic Retrieval → Grounded Answer with Sources
 
-## Why This Project
-This project was built to practice RAG pipelines, LLM application development, prompt engineering, document retrieval, AI system support, and documentation concepts.
+## Tools and Technologies
+- Python
+- ChromaDB
+- SentenceTransformers
+- all-MiniLM-L6-v2 embedding model
+- JSONL
+- Git / GitHub
+- VS Code
 
-## Target Skills
-- Python for AI/ML applications
-- Retrieval-Augmented Generation
-- Embeddings
-- Vector databases
-- Prompt engineering
-- Context management
-- Response quality evaluation
-- AI application documentation
-- Troubleshooting and support readiness
+## Sample Question
+**Question:** What are common data quality issues?
+
+**Answer:** The assistant retrieves context from the data quality notes and identifies issues such as missing values, duplicate records, invalid dates, incorrect statuses, inconsistent formatting, outdated records, and missing documents.
+
+**Sources:**
+- data_quality_notes.txt | chunk 1
+- data_quality_notes.txt | chunk 2
+
+## What I Improved on Day 2
+- Added `app.py` to run an assistant-style Q&A flow
+- Updated `retrieve.py` so retrieval results are returned in a structured format
+- Improved `ingest.py` by replacing character-based chunking with sentence-aware chunking
+- Added source display to make answers traceable
+- Tested the full question → retrieval → answer → sources pipeline
+
+## Next Improvements
+- Remove duplicate sentences caused by overlapping chunks
+- Add a Streamlit interface
+- Add more sample documents
+- Add answer quality evaluation
+- Add a troubleshooting/runbook section
